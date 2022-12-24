@@ -1,0 +1,55 @@
+{
+    "appId": "com.fmt.salon",
+    "productName": "Astro Checkins",
+    "copyright": "FMT",
+    "directories": {
+        "app": ".",
+        "output": "out",
+        "buildResources": "assets"
+    }, 
+    "extraResources": [
+        "build/public",
+        {
+            "from":"./DB/",
+            "to":"DB/",
+            "filter":["**/*"]
+        }
+      ],
+    "files": [
+        "package.json",
+        "build/**/*",
+        "node_modules"
+    ], 
+    "dmg": { 
+        "backgroundColor": "#ffffff",
+        "icon": "icon.png",
+        "window": {
+            "width": "400",
+            "height": "300"
+        },
+        "contents": [
+            {
+                "x": 100,
+                "y": 100
+            },
+            {
+                "x": 300,
+                "y": 100,
+                "type": "link",
+                "path": "/Applications"
+            }
+        ]
+    },
+    "mac": {
+        "target": "dmg",
+        "category": "public.app-category.utilities"
+      },
+    "win": {
+        "target": "nsis"
+    },
+    "linux": {
+        "target": "AppImage",
+        "category": "Utility"
+    },
+    "extends":null
+}

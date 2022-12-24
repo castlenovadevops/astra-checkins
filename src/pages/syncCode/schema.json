@@ -1,0 +1,56 @@
+{
+    "formName":"syncCode",
+    "formClass":"loginContainer",
+    "properties": [
+      {
+        "component":"div",
+        "type":"text",
+        "grid":"12",
+        "text":"Enter your Sync Code",
+        "style":{"font-size":"20px", "font-weight":"500"}
+      },
+      {
+        "component":"TextField", 
+        "type": "text",
+        "format":"stringnumeric",
+        "minLength": 1,
+        "maxLength": 6,
+        "grid":9,
+        "name":"syncCode",
+        "label":"",
+        "style":{"text-transform":"capitalize"},
+        "placeholder":"Enter your Sync Code"
+      } 
+    ], 
+    "buttons":[
+      {
+        "label":"Submit",
+        "type":"submit",
+        "grid":3,
+        "variant":"contained"
+      }
+    ],
+    "required":["syncCode"],
+    "onSubmit":{
+      "action":"API",
+      "url":"pos/checkSyncCode",
+      "method":"POST", 
+      "onSuccess":{
+        "action":"savelocalstorage",
+        "options":[
+          {
+            "key":"merchantdetail",
+            "value":"response"
+          },
+          {
+            "key":"devicetoken",
+            "value":"response"
+          }
+        ],
+        "onSuccess":{
+          "action":"redirect",
+          "url":"/syncData/progress"
+        }
+      } 
+    }
+  }

@@ -1,0 +1,187 @@
+{
+    "formName":"customer",
+    "properties": [
+        {
+            "component":"div", 
+            "type": "text",
+            "format":"string",
+            "text" : "Customer Details",
+            "style":{"font-size":"20px", "margin-top":"1rem"}
+        },
+        {
+            "component":"TextField", 
+            "type": "text", 
+            "format":"number",
+            "minLength": 1,
+            "maxLength": 4,
+            "grid":6,
+            "name":"mCustomerMemberId",
+            "label":"Member ID",
+            "placeholder":"Member ID",
+            "validations":[
+                "number"
+            ]
+        }, 
+        {
+            "component":"TextField", 
+            "type": "text", 
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerName",
+            "label":"Customer Name",
+            "placeholder":"Customer Name"
+        },  
+        {
+            "component":"TextField", 
+            "type": "text",
+            "format":"email", 
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerEmail",
+            "label":"Customer Email",
+            "placeholder":"Customer Email"
+        },   
+        {
+            "component":"TextField", 
+            "type": "text",
+            "format":"phone",
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerMobile",
+            "label":"Phone Number",
+            "placeholder":"Phone Number"
+        },
+        {
+            "component":"TextField", 
+            "type": "text",
+            "format":"string",
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerAddress1",
+            "label":"Address 1",
+            "placeholder":"Address 1"
+        },
+        {
+            "component":"TextField", 
+            "type": "text",
+            "format":"string",
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerAddress2",
+            "label":"Address 2",
+            "placeholder":"Address 2"
+        },
+        {
+            "component":"TextField", 
+            "type": "text",
+            "format":"string",
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":4,
+            "name":"mCustomerCity",
+            "label":"City",
+            "placeholder":"City"
+        },
+        {
+            "component":"Select", 
+            "type": "text",
+            "format":"string",
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":4,
+            "name":"mCustomerState",
+            "data":"https://api.ci.dev.castlenova.net/api/v1/lookup/getStates",
+            "dataformat":{
+                "label":"stateName",
+                "value":"id"
+            },
+            "label":"State ",
+            "placeholder":"State"
+        }, 
+        {
+            "component":"TextField", 
+            "type": "text",
+            "format":"number",
+            "minLength": 1,
+            "maxLength": 5,
+            "grid":4,
+            "name":"mCustomerZipcode",
+            "label":"Zipcode",
+            "placeholder":"Zipcode",
+            "validations":[
+                "number"
+            ]
+        },
+        {
+            "component":"TextField", 
+            "type": "text", 
+            "format":"date",
+            "inputFormat":"MM/DD/YYYY",
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerDOB",
+            "label":"DOB",
+            "placeholder":"DOB"
+        }, 
+        {
+            "component":"TextField", 
+            "type": "hidden", 
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerLoyaltyPoints",
+            "label":"Loyality Point",
+            "placeholder":"Loyality Point",
+            "value":""
+        },
+        {
+            "component":"TextField", 
+            "type": "hidden", 
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerTotalVisit",
+            "label":"Total Visit",
+            "placeholder":"Total Visit"
+        },
+        {
+            "component":"TextField", 
+            "type": "hidden", 
+            "minLength": 1,
+            "maxLength": 50,
+            "grid":6,
+            "name":"mCustomerTotalSpent",
+            "label":"Total Spent",
+            "placeholder":"Total Spent"
+        }
+    ],
+    "required": ["mCustomerName", "mCustomerEmail","mCustomerAddress1","mCustomerCity","mCustomerZipcode"],
+    "buttons":[
+        {
+          "label":"Save",
+          "type":"submit",
+          "variant":"contained",
+          "grid":2
+        },
+        {
+          "label":"Cancel",
+          "type":"close",
+          "variant":"outlined",
+          "grid":2
+        }
+    ],
+    "onSubmit":{  
+        "action":"API",
+        "url":"merchant/customers/save",
+        "method":"POST",
+        "onSuccess":{
+            "action":"reloadData"
+        }
+    }
+}
