@@ -28,6 +28,12 @@ module.exports = class CheckInController extends baseController{
                     authorization:'accessAuth'
                 },
                 {
+                    path:this.path+"/saveCustomer",
+                    type:"post",
+                    method: "saveCustomer",
+                    authorization:'accessAuth'
+                },
+                {
                     path:this.path+"/checkPOS",
                     type:"post",
                     method: "checkPOS",
