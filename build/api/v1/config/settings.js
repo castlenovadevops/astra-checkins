@@ -18,10 +18,10 @@ const database = new Sequelize({
     password: '',
     host: 'localhost',
     dialect: 'sqlite',
-    storage: path.join(__dirname, "../../../../../DB/astrapos.sqlite")
+    storage: path.join(__dirname, "../../../../../DB/astracheckins.sqlite")
 });
 
-console.log("DBPATH:::::", path.join(__dirname, "../../../../../DB/astrapos.sqlite"))
+console.log("DBPATH:::::", path.join(__dirname, "../../../../../DB/astracheckins.sqlite"))
 // const database = new Sequelize('astrapos','','',{
 //     host: "0.0.0.0",
 //     dialect: "sqlite", 

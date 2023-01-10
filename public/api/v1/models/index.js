@@ -70,11 +70,11 @@ let sequelize  = new Sequelize({
     password: '',
     host: 'localhost',
     dialect: 'sqlite',
-    storage: path.join(__dirname, "../../../../../DB/astrapos.sqlite")
+    storage: path.join(__dirname, "../../../../../DB/astracheckins.sqlite")
 });
 
 
-console.log("DBPATH MODELS:::::", path.join(__dirname, "../../../../../DB/astrapos.sqlite"))
+console.log("DBPATH MODELS:::::", path.join(__dirname, "../../../../../DB/astracheckins.sqlite"))
 fs
   .readdirSync(__dirname)
   .filter(file => {

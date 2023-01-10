@@ -60,26 +60,26 @@ const corsOptions ={
 
         // MERCHANT CONTROLLERS
         new CustomerController(),
-        new DiscountController(),
-        new DefaultCommissionController(),
-        new DefaultDiscountController(),
-        new CategoryController(),
-        new ProductController(),
-        new TaxController(),
+        // new DiscountController(),
+        // new DefaultCommissionController(),
+        // new DefaultDiscountController(),
+        // new CategoryController(),
+        // new ProductController(),
+        // new TaxController(),
         new MerchantEmployeeController(), 
-        new MEmployeeCommissionController(), 
-        new ClockInController(),
-        new TicketController(),
-        new SaveTicketController(),
-        new TransferController(),
-        new PaymentController(),
-        new TransactionController(),
-        new PayoutController(),
-        new ReportController(),
-        new TicketInfoController(),
-        new CombineController(),
-        new LoyaltyPointSettingsController(),
-        new GiftCardsController(),
+        // new MEmployeeCommissionController(), 
+        // new ClockInController(),
+        // new TicketController(),
+        // new SaveTicketController(),
+        // new TransferController(),
+        // new PaymentController(),
+        // new TransactionController(),
+        // new PayoutController(),
+        // new ReportController(),
+        // new TicketInfoController(),
+        // new CombineController(),
+        // new LoyaltyPointSettingsController(),
+        // new GiftCardsController(),
         
         new SyncController(),
         new SyncTaxController(),
@@ -95,11 +95,11 @@ const corsOptions ={
         new SyncLPRedeemSettings(),
         new SyncGiftCardsSettings(),
 
-        new PrintController(),
-        new CheckInController(),
+        // new PrintController(),
+        // new CheckInController(),
         new AppointmentController(),
-        new BatchController(),
-        new WaitinglistController()
+        // new BatchController(),
+        // new WaitinglistController()
     ] 
     function initialize(){ 
             initializeControllers(0); 
@@ -127,6 +127,7 @@ const corsOptions ={
             if(route !== undefined){
                 if(route.authorization !== undefined && route.authorization !== ''){
                     if(route.type === 'post'){
+                        console.log(route)
                         router.post(route.path, authenticate[route.authorization], controller[route.method]);
                     }
                     else{      

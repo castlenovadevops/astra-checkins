@@ -6,7 +6,7 @@
   "private": false,
   "main": "build/main.js",
   "scripts": {
-    "start-react": "react-scripts start",
+    "start-react": "BROWSER=none react-scripts start",
     "startwin-react": "react-scripts start",
     "build-react": "react-scripts build",
     "start-electron": "nodemon --watch ./public/* --exec \"electron .\"",

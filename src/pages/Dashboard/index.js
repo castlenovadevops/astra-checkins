@@ -1,5 +1,6 @@
 import React from "react";
-import AppointmentsCompoent from "../Appointments";
+// import AppointmentsCompoent from "../Appointments";
+import CheckInComponent from "../Checkin";
 
 export default class Dashboard extends React.Component{
     constructor(){
@@ -21,7 +22,7 @@ export default class Dashboard extends React.Component{
     }
     render(){
         return  <div>
-            <AppointmentsCompoent />
+            <CheckInComponent />
         </div>
     }
 }
