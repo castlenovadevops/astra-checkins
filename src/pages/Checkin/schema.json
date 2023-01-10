@@ -10,7 +10,7 @@
         },
         {
             "component":"TextField", 
-            "type": "text", 
+            "type": "hidden", 
             "format":"number",
             "minLength": 1,
             "maxLength": 4,
@@ -34,7 +34,7 @@
         },  
         {
             "component":"TextField", 
-            "type": "text",
+            "type": "hidden",
             "format":"email", 
             "minLength": 1,
             "maxLength": 50,
@@ -56,7 +56,7 @@
         },
         {
             "component":"TextField", 
-            "type": "text",
+            "type": "hidden",
             "format":"string",
             "minLength": 1,
             "maxLength": 50,
@@ -67,7 +67,7 @@
         },
         {
             "component":"TextField", 
-            "type": "text",
+            "type": "hidden",
             "format":"string",
             "minLength": 1,
             "maxLength": 50,
@@ -78,7 +78,7 @@
         },
         {
             "component":"TextField", 
-            "type": "text",
+            "type": "hidden",
             "format":"string",
             "minLength": 1,
             "maxLength": 50,
@@ -88,24 +88,19 @@
             "placeholder":"City"
         },
         {
-            "component":"Select", 
-            "type": "text",
+            "component":"TextField", 
+            "type": "hidden",
             "format":"string",
             "minLength": 1,
             "maxLength": 50,
             "grid":4,
-            "name":"mCustomerState",
-            "data":"https://api.ci.dev.castlenova.net/api/v1/lookup/getStates",
-            "dataformat":{
-                "label":"stateName",
-                "value":"id"
-            },
+            "name":"mCustomerState", 
             "label":"State ",
             "placeholder":"State"
         }, 
         {
             "component":"TextField", 
-            "type": "text",
+            "type": "hidden",
             "format":"number",
             "minLength": 1,
             "maxLength": 5,
@@ -119,9 +114,7 @@
         },
         {
             "component":"TextField", 
-            "type": "text", 
-            "format":"date",
-            "inputFormat":"MM/DD/YYYY",
+            "type": "hidden",   
             "minLength": 1,
             "maxLength": 50,
             "grid":6,
@@ -161,7 +154,7 @@
             "placeholder":"Total Spent"
         }
     ],
-    "required": ["mCustomerName", "mCustomerEmail","mCustomerAddress1","mCustomerCity","mCustomerZipcode"],
+    "required": ["mCustomerName", "mCustomerMobile"],
     "buttons":[
         {
           "label":"Save",

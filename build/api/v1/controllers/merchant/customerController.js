@@ -193,7 +193,7 @@ module.exports = class CustomerController extends baseController{
                                 find().then(devices => { 
 
                                     devices.forEach(d=>{ 
-                                        thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", req.input, req).then(r=>{
+                                        thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", input, req).then(r=>{
                                             console.log(r)
                                         })
                                     })
@@ -215,7 +215,7 @@ module.exports = class CustomerController extends baseController{
                                     console.log(devices)
                             devices.forEach(d=>{ 
                                 console.log(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin")
-                                thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", req.input, req).then(r=>{
+                                thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", input, req).then(r=>{
                                     console.log(r)
                                 })
                             })

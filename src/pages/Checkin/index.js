@@ -98,7 +98,7 @@ export default class CheckInComponent extends React.Component{
                     merchantid = JSON.parse(merchantdetail)["merchantId"];
                 }
                 this.httpManager.postRequest('/merchant/appointment/save',{data:{merchantId:merchantid, appointmentdate: appointmentdate, appointmenttime:appointmenttime,  appointments: appointments}}).then(res=>{
-                    this.setState({searchPhone:'', searchName:'', guestName:'',techDetail:{}, customerDetail:{}, isNext:false, currentDivIndex:'home'})
+                    this.setState({ selectedServiceList:[],searchPhone:'', searchName:'', guestName:'',techDetail:{}, customerDetail:{}, isNext:false, currentDivIndex:'home'})
                 })
             }
         })
@@ -117,7 +117,7 @@ export default class CheckInComponent extends React.Component{
                 if(r.data.length > 0){
                     this.setState({customersList: r.data, isLoading: false},()=>{
                         if(this.state.customersList.length === 1){
-                            this.setState({isNext: true,customerDetail: this.state.customersList[0]}, ()=>{
+                            this.setState({isNext: true,customerDetail: this.state.customersList[0], guestName:''}, ()=>{
                                 this.setState({currentDivIndex:'serviceSelection'})
                             })
                         }
@@ -254,7 +254,7 @@ export default class CheckInComponent extends React.Component{
     }
 
     renderTechSelection(){
-        return <Container maxWidth='lg' style={{maxHeight:'500px', overflow:'auto'}}>
+        return <Container maxWidth='lg'>
             <Grid container style={{ padding:'1rem'}}>
                 <Grid item xs={6}>
                     <h1>Select Technician</h1>
@@ -262,25 +262,26 @@ export default class CheckInComponent extends React.Component{
                 <Grid item xs={6}> 
                 </Grid>
             </Grid>
-
-            {this.state.employeelist.map( emp =>{
-                return <Grid container style={{padding:'1rem 0',borderBottom:'1px solid #ccc', background:this.getBackground(emp), display:'flex', alignItems:'center'}}>
-                    <Grid item xs={12} style={{ display:'flex', alignItems:'center'}} onClick={()=>{
-                            this.setState({isNext: true,techDetail: emp}, ()=>{
-                                // this.setState({isNext: false, currentDivIndex:'home'})
-                            })
-                        }}>
-                        <AccountCircleOutlined />&nbsp;&nbsp;&nbsp;&nbsp;{emp.mEmployeeFirstName+" "+emp.mEmployeeLastName}
-                    </Grid> 
-                </Grid>
-            }) }
+            <div  style={{maxHeight:'500px', overflow:'auto'}}>
+                {this.state.employeelist.map( emp =>{
+                    return <Grid container style={{padding:'1rem 0',borderBottom:'1px solid #ccc', background:this.getBackground(emp), display:'flex', alignItems:'center'}}>
+                        <Grid item xs={12} style={{ display:'flex', alignItems:'center'}} onClick={()=>{
+                                this.setState({isNext: true,techDetail: emp}, ()=>{
+                                    // this.setState({isNext: false, currentDivIndex:'home'})
+                                })
+                            }}>
+                            <AccountCircleOutlined />&nbsp;&nbsp;&nbsp;&nbsp;{emp.mEmployeeFirstName+" "+emp.mEmployeeLastName}
+                        </Grid> 
+                    </Grid>
+                }) }
+                
+            </div>
             
             <div style={{display:'flex', flexDirection:'row'}}>
                 <Button variant={'contained'} onClick={()=>{
                     this.saveCheckin()
                 }}>Done</Button>
             </div>
-            
         </Container>
     } 
 
@@ -301,7 +302,7 @@ export default class CheckInComponent extends React.Component{
                     </Grid>
                     <Grid item xs={3}> 
                         <Button variant={'contained'} onClick={()=>{
-                            this.setState({isNext: true,customerDetail: cust}, ()=>{
+                            this.setState({isNext: true,customerDetail: cust, guestName:''}, ()=>{
                                 this.setState({currentDivIndex:'serviceSelection'})
                             })
                         }}>
@@ -378,13 +379,13 @@ export default class CheckInComponent extends React.Component{
                                     </div>
                             })}  
                     </div>
-                    <div>
-                        <Button variant={'contained'} fullWidth onClick={()=>{
+                    <div style={{display:'flex',width:'100%', justifyContent:'space-between'}}>
+                        <Button variant={'contained'}  onClick={()=>{
                             this.setState({selectedServiceList: []})
                         }}>
                             Clear All
                         </Button> 
-                        <Button variant={'contained'} fullWidth onClick={()=>{
+                        <Button variant={'contained'}  onClick={()=>{
                             this.setState({isNext:true, currentDivIndex:'techSelection'})
                         }}>
                             Next
@@ -423,6 +424,8 @@ export default class CheckInComponent extends React.Component{
                                 endAdornment: <InputAdornment position="start">
                                     <IconButton style={{width:'40px',height:'40px'}} onClick={()=>{
                                         // this.setState({isNext:true, currentDivIndex:1})
+                                        console.log(this.state.searchPhone.trim())
+                                        if(this.state.searchPhone.trim() !== '+1' && this.state.searchPhone.trim() !== '')
                                         this.searchByPhone();
                                     }}>
                                         <ArrowCircleRightOutlined  style={{width:'40px',height:'40px'}}/>
@@ -525,7 +528,8 @@ export default class CheckInComponent extends React.Component{
                         fullWidth InputProps={{
                         endAdornment: <InputAdornment position="start">
                             <IconButton style={{width:'40px',height:'40px'}} onClick={()=>{
-                                this.setState({isNext:true, currentDivIndex:'serviceSelection'})
+                                if(this.state.guestName.trim() !== '')
+                                    this.setState({isNext:true, currentDivIndex:'serviceSelection', customerDetail:{}})
                             }}>
                                 <ArrowCircleRightOutlined  style={{width:'40px',height:'40px'}}/>
                             </IconButton>

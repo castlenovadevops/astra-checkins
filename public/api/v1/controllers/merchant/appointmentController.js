@@ -42,6 +42,7 @@ module.exports = class AppointmentController extends baseController{
             resolve({MSG: "INITIALIZED SUCCESSFULLY"})
         });
     } 
+
     
 
     saveAppointment = async(req, res, next)=>{
@@ -49,54 +50,50 @@ module.exports = class AppointmentController extends baseController{
         find().then(devices => {
             console.log(devices)
             devices.forEach(d=>{ 
-                thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/pos/checkins/saveAppointment", req.input, req).then(r=>{
+                thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/checkins/save", req.input, req).then(r=>{
 
                 })
             })
           }).catch(e=>{
             thisobj.sendResponse({message:"Error"}, res, 400)
           })
-
-        this.saveAppointmentServices(0, req, res, next)
+            this.saveAppointments(0, req, res, next) 
     }
 
-    saveAppointmentServices = async(i, req, res, next, parentappid='')=>{
-        console.log(Object.keys(req.input.data.selectedServices), i)
-        var keys = Object.keys(req.input.data.selectedServices)
+    saveAppointments = async(i,req,res,next, parentappid='')=>{
+        var keys =  req.input.data.appointments
         if(i < keys.length){
             var obj = keys[i]
-            console.log(obj)
-            if(obj !== '' && obj !== undefined){
-                var appinput = {
-                    appointmentBookedBy: '',
-                    createdDate: this.getDate(),
-                    appointmentDate:req.input.data.showingCustomerForm.appointmentdate,
-                    appointmentTime:req.input.data.showingCustomerForm.appointmenttime,
-                    recordType:'Appointment'
-                }
-            
-                if(obj.indexOf('Guest') === -1){
-                    appinput["customerId"] = req.input.data.showingCustomerForm.customerDetail.mCustomerId
-                    appinput["parentId"] = ''
-                    appinput["appointmentStatus"] = 'Booked'
-                }
-                else{ 
-                    appinput["guestName"] = obj
-                    appinput["parentId"] = parentappid
-                    appinput["appointmentStatus"] = 'Booked'
-                }
+            console.log(JSON.stringify(obj))
+            var appinput = {
+                appointmentBookedBy: '',
+                createdDate: this.getDate(),
+                appointmentDate:req.input.data.appointmentdate,
+                appointmentTime:req.input.data.appointmenttime,
+                recordType:'Checkin'
+            }
+            var customerdetail={mCustomerName:''};
+            if(obj.customer !== null && obj.customer !== ''){
+                var detail = await this.readOne({where:{
+                    mCustomerId: obj.customer
+                }}, 'mCustomers')
+                customerdetail = detail.dataValues || detail
+            } 
+           
+            appinput["guestName"] = obj.guestName
+            appinput["customerId"] = obj.customer !== null?  customerdetail.mCustomerId : ''
+            appinput["parentId"] = ''
+            appinput["appointmentStatus"] = 'Booked'
+           
 
-                this.create('appointments', appinput).then(async (r)=>{
-                    if(obj.indexOf('Guest') === -1){ 
-                        parentappid = r.dataValues.appointmentId || r.appointmentId
-                    }
-                    var appointmentid = r.dataValues.appointmentId || r.appointmentId
-                    this.saveAppointmentIndividualServices(0,req.input.data.selectedServices[obj], i, req,res, next, parentappid, appointmentid)
-                })
-            }
-            else{
-                this.sendResponse({message:"Appointment saved successfully."}, res, 200)
-            }
+            this.create('appointments', appinput).then(async (r)=>{
+                if(i === 0){ 
+                    parentappid = r.dataValues.appointmentId || r.appointmentId
+                }
+                var appointmentid = r.dataValues.appointmentId || r.appointmentId
+                this.saveAppointmentIndividualServices(0,obj.services, i, req,res, next, parentappid, appointmentid)
+            })
+
         }
 
         else{
@@ -104,13 +101,75 @@ module.exports = class AppointmentController extends baseController{
         }
     }
 
+
+    // saveAppointment = async(req, res, next)=>{
+    //     var thisobj = this;
+    //     find().then(devices => {
+    //         console.log(devices)
+    //         devices.forEach(d=>{ 
+    //             thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/pos/checkins/saveAppointment", req.input, req).then(r=>{
+
+    //             })
+    //         })
+    //       }).catch(e=>{
+    //         thisobj.sendResponse({message:"Error"}, res, 400)
+    //       })
+
+    //     this.saveAppointmentServices(0, req, res, next)
+    // }
+
+    // saveAppointmentServices = async(i, req, res, next, parentappid='')=>{
+    //     console.log(Object.keys(req.input.data.selectedServices), i)
+    //     var keys = Object.keys(req.input.data.selectedServices)
+    //     if(i < keys.length){
+    //         var obj = keys[i]
+    //         console.log(obj)
+    //         if(obj !== '' && obj !== undefined){
+    //             var appinput = {
+    //                 appointmentBookedBy: '',
+    //                 createdDate: this.getDate(),
+    //                 appointmentDate:req.input.data.showingCustomerForm.appointmentdate,
+    //                 appointmentTime:req.input.data.showingCustomerForm.appointmenttime,
+    //                 recordType:'Appointment'
+    //             }
+            
+    //             if(obj.indexOf('Guest') === -1){
+    //                 appinput["customerId"] = req.input.data.showingCustomerForm.customerDetail.mCustomerId
+    //                 appinput["parentId"] = ''
+    //                 appinput["appointmentStatus"] = 'Booked'
+    //             }
+    //             else{ 
+    //                 appinput["guestName"] = obj
+    //                 appinput["parentId"] = parentappid
+    //                 appinput["appointmentStatus"] = 'Booked'
+    //             }
+
+    //             this.create('appointments', appinput).then(async (r)=>{
+    //                 if(obj.indexOf('Guest') === -1){ 
+    //                     parentappid = r.dataValues.appointmentId || r.appointmentId
+    //                 }
+    //                 var appointmentid = r.dataValues.appointmentId || r.appointmentId
+    //                 this.saveAppointmentIndividualServices(0,req.input.data.selectedServices[obj], i, req,res, next, parentappid, appointmentid)
+    //             })
+    //         }
+    //         else{
+    //             this.sendResponse({message:"Appointment saved successfully."}, res, 200)
+    //         }
+    //     }
+
+    //     else{
+    //         this.sendResponse({message:"Appointment saved successfully."}, res, 200)
+    //     }
+    // }
+
+    
     saveAppointmentIndividualServices = async(j, services, i, req,res, next, parentappid, appointmentid)=>{
         console.log("SERVICEs ", services, j)
         if(j < services.length){
             var input = {
                 appointmentId: appointmentid,
-                serviceId: services[j].mProductId,
-                technicianId: services[j].technicianId,
+                serviceId: services[j].service,
+                technicianId: services[j].technician,
                 serviceDuration: services[j].duration
             }
 
@@ -119,9 +178,11 @@ module.exports = class AppointmentController extends baseController{
             })
         }
         else{
-            this.saveAppointmentServices(i+1, req, res, next, parentappid)
+            // this.saveAppointmentServices(i+1, req, res, next, parentappid)
+            this.saveAppointments(i+1, req, res, next, parentappid)
         }
     }
+
 
 
     getAppointmentsByDate = async(req, res, next)=>{
