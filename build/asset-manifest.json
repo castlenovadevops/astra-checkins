@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.8aab9831.css",
-    "main.js": "/static/js/main.b06b9520.js",
-    "static/js/787.5ba6a279.chunk.js": "/static/js/787.5ba6a279.chunk.js",
+    "main.css": "/static/css/main.d7fabbf9.css",
+    "main.js": "/static/js/main.5e41cb9e.js",
+    "static/js/787.b2cdffd1.chunk.js": "/static/js/787.b2cdffd1.chunk.js",
     "static/media/Orbitron-Medium.ttf": "/static/media/Orbitron-Medium.162802b777eeb52a4ce7.ttf",
     "static/media/Orbitron-SemiBold.ttf": "/static/media/Orbitron-SemiBold.90602651a2a704c8f1e0.ttf",
     "static/media/Orbitron-ExtraBold.ttf": "/static/media/Orbitron-ExtraBold.ff1695d3798c21387dca.ttf",
@@ -10,12 +10,12 @@
     "static/media/Orbitron-Bold.ttf": "/static/media/Orbitron-Bold.e5fbf3a6503aa799f50a.ttf",
     "static/media/Orbitron-Black.ttf": "/static/media/Orbitron-Black.27f6db35693d89cb48b2.ttf",
     "index.html": "/index.html",
-    "main.8aab9831.css.map": "/static/css/main.8aab9831.css.map",
-    "main.b06b9520.js.map": "/static/js/main.b06b9520.js.map",
-    "787.5ba6a279.chunk.js.map": "/static/js/787.5ba6a279.chunk.js.map"
+    "main.d7fabbf9.css.map": "/static/css/main.d7fabbf9.css.map",
+    "main.5e41cb9e.js.map": "/static/js/main.5e41cb9e.js.map",
+    "787.b2cdffd1.chunk.js.map": "/static/js/787.b2cdffd1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8aab9831.css",
-    "static/js/main.b06b9520.js"
+    "static/css/main.d7fabbf9.css",
+    "static/js/main.5e41cb9e.js"
   ]
 }

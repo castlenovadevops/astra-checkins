@@ -98,6 +98,6 @@ io.on('connection', function(socket) {
 });
   
 http.listen(appPort, function() {
-    console.log('app listening on port ' + appPort.toString());
+    // console.log('app listening on port ' + appPort.toString());
 });
  

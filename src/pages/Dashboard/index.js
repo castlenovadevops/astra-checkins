@@ -1,7 +1,8 @@
+import { IconButton } from "@mui/material";
 import React from "react";
 // import AppointmentsCompoent from "../Appointments";
 import CheckInComponent from "../Checkin";
-
+import { Sync } from '@mui/icons-material'
 export default class Dashboard extends React.Component{
     constructor(){
         super();
@@ -22,6 +23,13 @@ export default class Dashboard extends React.Component{
     }
     render(){
         return  <div>
+            <div style={{display:'flex', alignItems:'center', margin:'1rem 1rem 0 0', justifyContent:'flex-end'}}>
+                <IconButton onClick={()=>{
+                    window.location.href = "/syncData/progress"
+                }}> 
+                    <Sync/>
+                </IconButton>
+            </div>
             <CheckInComponent />
         </div>
     }

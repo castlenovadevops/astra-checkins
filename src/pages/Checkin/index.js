@@ -98,7 +98,7 @@ export default class CheckInComponent extends React.Component{
                     merchantid = JSON.parse(merchantdetail)["merchantId"];
                 }
                 this.httpManager.postRequest('/merchant/appointment/save',{data:{merchantId:merchantid, appointmentdate: appointmentdate, appointmenttime:appointmenttime,  appointments: appointments}}).then(res=>{
-                    this.setState({ selectedServiceList:[],searchPhone:'', searchName:'', guestName:'',techDetail:{}, customerDetail:{}, isNext:false, currentDivIndex:'home'})
+                    this.setState({ selectedServiceList:[],searchPhone:'', searchName:'', guestName:'',techDetail:{}, customerDetail:{}, isNext:false, currentDivIndex:'home', showError:true, errorText:"Check-In created successfully."})
                 })
             }
         })
@@ -246,11 +246,12 @@ export default class CheckInComponent extends React.Component{
             </Grid>
     }
 
-    getBackground(emp){
+    getBackground(emp){ 
+        console.log("TECH DETAIL:::",emp.mEmployeeId, this.state.techDetail.mEmployeeId)
         if(emp.mEmployeeId === this.state.techDetail.mEmployeeId){
             return '#bee1f7'
         }
-        return 'transparent;'
+        return 'transparent'
     }
 
     renderTechSelection(){
@@ -264,9 +265,10 @@ export default class CheckInComponent extends React.Component{
             </Grid>
             <div  style={{maxHeight:'500px', overflow:'auto'}}>
                 {this.state.employeelist.map( emp =>{
-                    return <Grid container style={{padding:'1rem 0',borderBottom:'1px solid #ccc', background:this.getBackground(emp), display:'flex', alignItems:'center'}}>
-                        <Grid item xs={12} style={{ display:'flex', alignItems:'center'}} onClick={()=>{
+                    return <Grid container style={{padding:'1rem 0', cursor:'pointer',borderBottom:'1px solid #ccc', background:this.getBackground(emp), display:'flex', alignItems:'center'}}>
+                        <Grid item xs={12} style={{ display:'flex', alignItems:'center', width:'100%'}} onClick={()=>{
                                 this.setState({isNext: true,techDetail: emp}, ()=>{
+                                    console.log("TECH DETAIL:::", this.state.techDetail)
                                     // this.setState({isNext: false, currentDivIndex:'home'})
                                 })
                             }}>
@@ -278,9 +280,9 @@ export default class CheckInComponent extends React.Component{
             </div>
             
             <div style={{display:'flex', flexDirection:'row'}}>
-                <Button variant={'contained'} onClick={()=>{
+                <Button variant={'contained'} disabled={this.state.techDetail.mEmployeeId === undefined ||this.state.techDetail.mEmployeeId ==='' } onClick={()=>{
                     this.saveCheckin()
-                }}>Done</Button>
+                }} style={{padding:'1rem 3rem', margin:'2rem 0'}}>Done</Button>
             </div>
         </Container>
     } 
@@ -382,12 +384,12 @@ export default class CheckInComponent extends React.Component{
                     <div style={{display:'flex',width:'100%', justifyContent:'space-between'}}>
                         <Button variant={'contained'}  onClick={()=>{
                             this.setState({selectedServiceList: []})
-                        }}>
+                        }} style={{padding:'1rem 3rem', margin:'2rem 0'}}>
                             Clear All
                         </Button> 
                         <Button variant={'contained'}  onClick={()=>{
                             this.setState({isNext:true, currentDivIndex:'techSelection'})
-                        }}>
+                        }} style={{padding:'1rem 3rem', margin:'2rem 0'}}>
                             Next
                         </Button>
                     </div>
@@ -553,7 +555,7 @@ export default class CheckInComponent extends React.Component{
                     <div style={{padding:'1rem', width:'100%'}}>
                         <Button variant={'outlined'} onClick={()=>{
                             this.addCustomer()
-                        }} fullWidth style={{fontSize:'24px', color:'blue'}}>Start</Button>
+                        }} fullWidth style={{fontSize:'24px', color:'blue'}}>Register</Button>
                     </div>
                 </Grid>
                 <Grid item xs={5} style={{display:'flex', alignItems:'center', flexDirection:'row'}}> 

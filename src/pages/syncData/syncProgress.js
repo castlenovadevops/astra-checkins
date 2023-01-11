@@ -52,86 +52,37 @@ export default class SyncProgress extends React.Component{
                 name: "merchantEmployees",
                 tablename: 'merchantEmployees',
                 progressText: "Synchronizing Staff details...",
-                progresscompletion: 10,
+                progresscompletion: 7.75,
                 url:  `/pos/syncData/employees`
             } ,
             {
                 name: "mCustomers",
                 tablename: 'mCustomers',
                 progressText: "Synchronizing Customers...",
-                progresscompletion: 10,
+                progresscompletion: 7.75,
                 url:  `/pos/syncData/getCustomers`
             },
             {
                 name: "mCategory",
                 tablename: 'mCategory',
                 progressText: "Synchronizing Categories...",
-                progresscompletion: 10,
+                progresscompletion: 7.75,
                 url:  `/pos/syncData/category`
             },
             {
                 name: "mProducts",
                 tablename: 'mProducts',
                 progressText: "Synchronizing Products/Services...",
-                progresscompletion: 10,
+                progresscompletion: 7.75,
                 url:  `/pos/syncData/products`
-            } ,
-            {
-                name: "mDefaultDiscountDivision",
-                tablename: 'mDefaultDiscountDivision',
-                progressText: "Synchronizing Default Discount Division Settings...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/defaultDiscountDivision`
-            } ,
-            {
-                name: "mDefaultCommission",
-                tablename: 'mDefaultCommission',
-                progressText: "Synchronizing Default Commission Settings...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/defaultCommission`
-            } ,
-            {
-                name: "mDiscounts",
-                tablename: 'mDiscounts',
-                progressText: "Synchronizing Discounts...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/discounts`
             } ,  
             {
                 name: "mTax",
                 tablename: 'mTax',
                 progressText: "Synchronizing Taxes...",
-                progresscompletion: 10,
+                progresscompletion: 7.75,
                 url:  `/pos/syncData/tax`
-            } ,
-            {
-                name: "LPSettings",
-                tablename: 'LPSettings',
-                progressText: "Synchronizing Loyalty Point Settings...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/lpsettings`
-            } ,
-            {
-                name: "LPActivationSettings",
-                tablename: 'LPActivationSettings',
-                progressText: "Synchronizing Loyalty Point Activation Settings...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/LPActivationSettings`
-            } ,
-            {
-                name: "LPRedeemSettings",
-                tablename: 'LPRedeemSettings',
-                progressText: "Synchronizing Loyalty Point Redeem Settings...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/LPRedeemSettings`
-            } ,
-            {
-                name: "giftCards",
-                tablename: 'giftCards',
-                progressText: "Synchronizing Giftcards Settings...",
-                progresscompletion: 10,
-                url:  `/pos/syncData/giftCards`
-            } ,
+            } , 
         ]}, ()=>{
             
             var condition = navigator.onLine ? 'online' : 'offline';
@@ -147,7 +98,7 @@ export default class SyncProgress extends React.Component{
         if(this.state.runningIndex< this.state.mastertables.length){
             this.setState({downloadinMessage: this.state.mastertables[this.state.runningIndex].progressText})
             this.httpManager.postRequest(this.state.mastertables[this.state.runningIndex].url, {data:"TAX"}).then(res=>{
-                this.setState({runningIndex: this.state.runningIndex+1}, ()=>{
+                this.setState({runningIndex: this.state.runningIndex+1, progress: this.state.progress+this.state.mastertables[this.state.runningIndex].progresscompletion}, ()=>{
                     this.syncAllData();
                 })
             }).catch(e=>{
@@ -157,6 +108,9 @@ export default class SyncProgress extends React.Component{
         else{
             this.setState({progress:100}, ()=>{
                 this.socket.emit('resetSync', {data:"Completed"})
+                if(this.props.afterSyncComplete){
+                    this.props.afterSyncComplete();
+                }
             })
         }
     }
