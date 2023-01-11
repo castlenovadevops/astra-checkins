@@ -23,14 +23,14 @@ export default class Dashboard extends React.Component{
     }
     render(){
         return  <div>
-            <div style={{display:'flex', alignItems:'center', margin:'1rem 1rem 0 0', justifyContent:'flex-end'}}>
+            <CheckInComponent />
+            <div style={{position:'fixed',bottom:0, left:0, right:0, display:'flex', alignItems:'center', margin:'1rem 1rem 0 0', justifyContent:'flex-end'}}>
                 <IconButton onClick={()=>{
                     window.location.href = "/syncData/progress"
                 }}> 
-                    <Sync/>
+                    <Sync style={{color:'#d0d0d0'}}/>
                 </IconButton>
             </div>
-            <CheckInComponent />
         </div>
     }
 }

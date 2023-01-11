@@ -189,19 +189,19 @@ module.exports = class CustomerController extends baseController{
                     var thisobj = this;
                     if(input.mCustomerMemberId.trim() !== ''){
                         this.readAll({where:{mCustomerMemberId: input.mCustomerMemberId}}, 'mCustomers').then(exmem=>{
-                            if(exmem.length === 0){
-                                find().then(devices => { 
-
-                                    devices.forEach(d=>{ 
-                                        thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", input, req).then(r=>{
-                                            console.log(r)
-                                        })
-                                    })
-                                  }).catch(e=>{
-                                    thisobj.sendResponse({message:"Error"}, res, 400)
-                                  })
+                            if(exmem.length === 0){ 
 
                                 this.create('mCustomers', input).then(async (resp)=>{ 
+
+                                    find().then(devices => {  
+                                        devices.forEach(d=>{  
+                                            thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", resp.dataValues || resp, req).then(r=>{
+                                                console.log(r)
+                                            })
+                                        })
+                                    }).catch(e=>{ 
+                                        console.log(e)
+                                    })
                                     this.sendResponse({message:"Saved sucessfully", data:resp}, res, 200)
                                 })
                             }
@@ -211,19 +211,18 @@ module.exports = class CustomerController extends baseController{
                         })
                     }
                     else{
-                        find().then(devices => { 
-                                    console.log(devices)
-                            devices.forEach(d=>{ 
-                                console.log(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin")
-                                thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", input, req).then(r=>{
-                                    console.log(r)
-                                })
-                            })
-                          }).catch(e=>{ 
-                            console.log(e)
-                          })
 
                         this.create('mCustomers', input).then(async (resp)=>{
+
+                            find().then(devices => {  
+                                devices.forEach(d=>{  
+                                    thisobj.apimanager.postRequest(`http://`+d.ip+":1818/api/v1/merchant/customers/saveCustomerFromCheckin", resp.dataValues || resp, req).then(r=>{
+                                        console.log(r)
+                                    })
+                                })
+                            }).catch(e=>{ 
+                                console.log(e)
+                            })
                             this.sendResponse({message:"Saved sucessfully", data:resp}, res, 200)
                         })
                     }

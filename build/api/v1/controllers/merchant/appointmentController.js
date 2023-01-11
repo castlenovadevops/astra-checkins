@@ -47,6 +47,7 @@ module.exports = class AppointmentController extends baseController{
 
     saveAppointment = async(req, res, next)=>{
         var thisobj = this;
+        console.log(find)
         find().then(devices => {
             console.log(devices)
             devices.forEach(d=>{ 
